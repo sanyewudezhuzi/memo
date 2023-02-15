@@ -9,7 +9,7 @@ type Task struct {
 	User_ID   uint   `gorm:"not null"`
 	Title     string `gorm:"index; not null"`
 	Content   string `gorm:"type:longtext"`
-	Status    string // Done or Continue
+	Status    string `gorm:"default:'Continue'"` // Done or Continue
 	StartTime int64
 	EndTime   int64
 }
