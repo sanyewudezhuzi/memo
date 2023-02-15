@@ -35,6 +35,8 @@ func ConnectMySQL(dsn string) {
 			TablePrefix:   "memo_", // 表名增加前缀
 			SingularTable: true,    // 使用表名单数
 		},
+		// 禁用外键约束
+		DisableForeignKeyConstraintWhenMigrating: true,
 	})
 	if err != nil {
 		panic("MySQL connection failed.")
@@ -48,4 +50,10 @@ func ConnectMySQL(dsn string) {
 
 	// 设置全局 DB
 	DB = db
+}
+
+// 数据库迁移
+func SyncSchema() {
+	DB.AutoMigrate(&User{})
+	DB.AutoMigrate(&Task{})
 }

@@ -30,6 +30,9 @@ func Conf() {
 	// mysql 连接
 	dsn := strings.Join([]string{DbUser, ":", DbPassWord, "@tcp(", DbHost, ":", DbPort, ")/", DbName, "?charset=utf8mb4&parseTime=True&loc=Local"}, "")
 	model.ConnectMySQL(dsn)
+
+	// 数据库迁移
+	model.SyncSchema()
 }
 
 // 加载 .ini
