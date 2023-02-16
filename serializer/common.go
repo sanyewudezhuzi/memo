@@ -13,3 +13,9 @@ type TokenData struct {
 	User  interface{} `json:"user"`
 	Token string      `json:"token"`
 }
+
+// list data
+type ListData struct {
+	Total int         `json:"num"`
+	List  interface{} `json:"list"`
+}

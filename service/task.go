@@ -16,6 +16,15 @@ type CreateTaskService struct {
 	Status  string `json:"status" form:"status"`
 }
 
+type ShowTaskService struct {
+	Title string `json:"title" form:"title" binding:"required"`
+}
+
+type ListTaskService struct {
+	PageNum  int `json:"page_num" form:"page_num"`
+	PageSize int `json:"page_size" form:"page_size"`
+}
+
 func (s *CreateTaskService) Create(uid uint) serializer.Response {
 	status_code := 0
 	var endTime int64 = 0
@@ -44,5 +53,51 @@ func (s *CreateTaskService) Create(uid uint) serializer.Response {
 	return serializer.Response{
 		StatusCode: errcode.OK,
 		Msg:        "Create task successed.",
+	}
+}
+
+func (s *ShowTaskService) Show(uid uint) serializer.Response {
+	status_code := 0
+	var task model.Task
+	// 此处可能需要防止 sql 注入
+	model.DB.Model(&model.Task{}).Where("user_id = ? and title = ?", uid, s.Title).First(&task)
+
+	// 判断 task 是否存在
+	if task.ID == 0 {
+		status_code = errcode.No_title_found
+		return serializer.Response{
+			StatusCode: status_code,
+			Error:      "No title found.",
+		}
+	}
+
+	// 返回响应
+	return serializer.Response{
+		StatusCode: errcode.OK,
+		Data:       serializer.BuildTask(task),
+		Msg:        "Show task successed.",
+	}
+}
+
+func (s *ListTaskService) List(uid uint) serializer.Response {
+	var tasks []model.Task
+	var count int64
+	if s.PageSize == 0 {
+		s.PageSize = 5
+	}
+	if s.PageNum == 0 {
+		s.PageNum = 1
+	}
+	// 此处可能需要防止 sql 注入
+	model.DB.Model(&model.Task{}).Where("user_id = ?", uid).
+		Limit(s.PageSize).Offset((s.PageNum - 1) * s.PageSize).
+		Find(&tasks).Count(&count)
+	return serializer.Response{
+		StatusCode: errcode.OK,
+		Data: serializer.ListData{
+			List:  serializer.BuildTasks(tasks),
+			Total: int(count),
+		},
+		Msg: "List task successed.",
 	}
 }

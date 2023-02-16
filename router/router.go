@@ -28,6 +28,8 @@ func Router() *gin.Engine {
 		task := memo.Group("task")
 		{
 			task.POST("create", controller.CreateTask)
+			task.GET("show", controller.ShowTask)
+			task.GET("list", controller.ListTask)
 		}
 	}
 	return r

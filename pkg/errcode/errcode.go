@@ -37,4 +37,5 @@ const (
 	// user-1
 	Failed_to_verify_identity = 2101
 	Parameter_transfer_error  = 2102
+	No_title_found            = 2103
 )
