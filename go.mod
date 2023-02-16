@@ -3,6 +3,7 @@ module github.com/sanyewudezhuzi/memo
 go 1.20
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-contrib/sessions v0.0.5
 	github.com/gin-gonic/gin v1.8.2
 	github.com/go-ini/ini v1.67.0

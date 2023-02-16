@@ -18,6 +18,7 @@ func Router() *gin.Engine {
 		user := memo.Group("user")
 		{
 			user.POST("register", controller.UserRegister)
+			user.POST("login", controller.UserLogin)
 		}
 	}
 	return r

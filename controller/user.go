@@ -25,3 +25,16 @@ func UserRegister(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, res)
 	}
 }
+
+func UserLogin(ctx *gin.Context) {
+	var userLogin service.UserLoginService
+	if err := ctx.ShouldBind(&userLogin); err != nil {
+		ctx.JSON(http.StatusInternalServerError, serializer.Response{
+			StatusCode: errcode.Invalid_pass_parameter,
+			Error:      "Invalid pass parameter.",
+		})
+	} else {
+		res := userLogin.Login()
+		ctx.JSON(http.StatusOK, res)
+	}
+}
