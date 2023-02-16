@@ -3,7 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/NotAPigInTheTrefoilHouse/memo/conf"
+	"github.com/sanyewudezhuzi/memo/conf"
+	"github.com/sanyewudezhuzi/memo/router"
 )
 
 func init() {
@@ -12,5 +13,6 @@ func init() {
 }
 
 func main() {
-	fmt.Println("hello world")
+	r := router.Router()
+	r.Run(conf.HttpPort)
 }

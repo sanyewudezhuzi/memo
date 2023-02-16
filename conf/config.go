@@ -3,7 +3,7 @@ package conf
 import (
 	"strings"
 
-	"github.com/NotAPigInTheTrefoilHouse/memo/model"
+	"github.com/sanyewudezhuzi/memo/model"
 
 	"github.com/go-ini/ini"
 )
