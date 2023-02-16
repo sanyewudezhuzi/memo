@@ -9,7 +9,7 @@ import (
 var JWTsecret = []byte("thisisasecretkey")
 
 type Claims struct {
-	ID      uint   `json:"id"`
+	UID     uint   `json:"id"`
 	Account string `json:"account"`
 	jwt.StandardClaims
 }
@@ -19,7 +19,7 @@ func GenerateToken(id uint, account string) (string, error) {
 	issTime := time.Now()
 	expTime := issTime.Add(time.Hour * 24)
 	claims := Claims{
-		ID:      id,
+		UID:     id,
 		Account: account,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expTime.Unix(),
@@ -33,7 +33,7 @@ func GenerateToken(id uint, account string) (string, error) {
 }
 
 // 解析 token
-func PatseToken(tokenString string) (*Claims, error) {
+func ParseToken(tokenString string) (*Claims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(t *jwt.Token) (interface{}, error) {
 		return JWTsecret, nil
 	})

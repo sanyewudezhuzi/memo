@@ -59,7 +59,7 @@ func (s *UserRegisterService) Register() serializer.Response {
 	// 返回响应
 	return serializer.Response{
 		StatusCode: errcode.OK,
-		Msg:        "Successful registration.",
+		Msg:        "Register successed.",
 	}
 }
 
@@ -104,5 +104,6 @@ func (s *UserLoginService) Login() serializer.Response {
 			User:  serializer.BuildUser(user),
 			Token: tokenStr,
 		},
+		Msg: "Login succeeded.",
 	}
 }

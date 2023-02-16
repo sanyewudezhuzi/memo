@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// 用户注册
 func UserRegister(ctx *gin.Context) {
 	// 创建服务
 	var userRegister service.UserRegisterService
@@ -26,6 +27,7 @@ func UserRegister(ctx *gin.Context) {
 	}
 }
 
+// 用户登录
 func UserLogin(ctx *gin.Context) {
 	var userLogin service.UserLoginService
 	if err := ctx.ShouldBind(&userLogin); err != nil {
