@@ -7,6 +7,8 @@ import (
 	"github.com/sanyewudezhuzi/memo/router"
 )
 
+// memo
+
 func init() {
 	conf.Conf()
 	fmt.Println("CONTINUE")
