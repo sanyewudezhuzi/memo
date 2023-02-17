@@ -1,5 +1,7 @@
 package dao
 
+// 持久层
+
 import "github.com/sanyewudezhuzi/memo/model"
 
 func CreateTask(task *model.Task) error {
