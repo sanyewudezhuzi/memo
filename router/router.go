@@ -30,6 +30,7 @@ func Router() *gin.Engine {
 			task.POST("create", controller.CreateTask)
 			task.GET("show", controller.ShowTask)
 			task.GET("list", controller.ListTask)
+			task.PUT("update", controller.UpdateTask)
 		}
 	}
 	return r

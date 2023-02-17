@@ -89,3 +89,24 @@ func ListTask(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, res)
 	}
 }
+
+// 更新备忘录
+func UpdateTask(ctx *gin.Context) {
+	claim, ok := ctx.Get("claim")
+	if !ok {
+		ctx.JSON(http.StatusOK, serializer.Response{
+			StatusCode: errcode.Failed_to_verify_identity,
+			Error:      "Failed to verify identity.",
+		})
+	}
+	var updateTask service.UpdateTaskService
+	if err := ctx.ShouldBind(&updateTask); err != nil {
+		ctx.JSON(http.StatusInternalServerError, serializer.Response{
+			StatusCode: errcode.Parameter_transfer_error,
+			Error:      "Parameter transfer error.",
+		})
+	} else {
+		res := updateTask.Update(claim.(*util.Claims).UID)
+		ctx.JSON(http.StatusOK, res)
+	}
+}

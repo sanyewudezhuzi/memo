@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/sanyewudezhuzi/memo/dao"
@@ -25,8 +24,23 @@ type ListTaskService struct {
 	PageSize int `json:"page_size" form:"page_size"`
 }
 
+type UpdateTaskService struct {
+	Title   string `json:"title" form:"title" binding:"required"`
+	Content string `json:"content" form:"content"`
+	Status  string `json:"status" form:"status"`
+}
+
 func (s *CreateTaskService) Create(uid uint) serializer.Response {
 	status_code := 0
+	var count int64
+	model.DB.Model(&model.Task{}).Where("title = ? and user_id = ?", s.Title, uid).Count(&count)
+	if count != 0 {
+		status_code = errcode.The_title_has_been_used
+		return serializer.Response{
+			StatusCode: status_code,
+			Error:      "The title has been used.",
+		}
+	}
 	var endTime int64 = 0
 	if s.Status == "" {
 		s.Status = "Continue"
@@ -41,9 +55,7 @@ func (s *CreateTaskService) Create(uid uint) serializer.Response {
 		StartTime: time.Now().Unix(),
 		EndTime:   endTime,
 	}
-	fmt.Println(task)
-	err := dao.CreateTask(&task)
-	if err != nil {
+	if err := dao.CreateTask(&task); err != nil {
 		status_code = errcode.Create_task_error
 		return serializer.Response{
 			StatusCode: status_code,
@@ -99,5 +111,37 @@ func (s *ListTaskService) List(uid uint) serializer.Response {
 			Total: int(count),
 		},
 		Msg: "List task successed.",
+	}
+}
+
+func (s *UpdateTaskService) Update(uid uint) serializer.Response {
+	// 标题不能更改
+	status_code := 0
+	var task model.Task
+	model.DB.Model(&model.Task{}).Where("title = ? and user_id = ?", s.Title, uid).First(&task)
+	if task.Title == "" {
+		status_code = errcode.No_title_found
+		return serializer.Response{
+			StatusCode: status_code,
+			Error:      "No title found.",
+		}
+	}
+	if s.Content != "" {
+		task.Content = s.Content
+	}
+	if s.Status != "" {
+		task.Status = s.Status
+	}
+	if err := dao.UpdateTask(&task); err != nil {
+		status_code = errcode.Update_task_error
+		return serializer.Response{
+			StatusCode: status_code,
+			Error:      "Update task error.",
+		}
+	}
+	return serializer.Response{
+		StatusCode: errcode.OK,
+		Data:       serializer.BuildTask(task),
+		Msg:        "Update task successed.",
 	}
 }

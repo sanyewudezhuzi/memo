@@ -33,9 +33,11 @@ const (
 const (
 	// system-0
 	Create_task_error = 2001
+	Update_task_error = 2002
 
 	// user-1
 	Failed_to_verify_identity = 2101
 	Parameter_transfer_error  = 2102
 	No_title_found            = 2103
+	The_title_has_been_used   = 2104
 )
