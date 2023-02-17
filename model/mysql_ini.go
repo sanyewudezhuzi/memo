@@ -1,5 +1,7 @@
 package model
 
+// 初始化模块
+
 import (
 	"log"
 	"os"

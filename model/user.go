@@ -1,5 +1,7 @@
 package model
 
+// user 模块
+
 import (
 	"math/rand"
 	"strconv"
