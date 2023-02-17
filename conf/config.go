@@ -9,11 +9,13 @@ import (
 )
 
 var (
+	// 服务模块
 	AppMode  string
 	HttpPort string
 )
 
 var (
+	// MySQL 模块
 	Db         string
 	DbHost     string
 	DbPort     string
