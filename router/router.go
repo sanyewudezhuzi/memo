@@ -22,8 +22,10 @@ func Router() *gin.Engine {
 			user.POST("register", controller.UserRegister)
 			user.POST("login", controller.UserLogin)
 		}
+
 		// 中间件
 		memo.Use(middleware.JWT())
+
 		// 备忘录操作
 		task := memo.Group("task")
 		{
