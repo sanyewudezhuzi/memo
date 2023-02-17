@@ -30,6 +30,10 @@ type UpdateTaskService struct {
 	Status  string `json:"status" form:"status"`
 }
 
+type DeleteTaskService struct {
+	Title string `json:"title" form:"title" binding:"required"`
+}
+
 func (s *CreateTaskService) Create(uid uint) serializer.Response {
 	status_code := 0
 	var count int64
@@ -143,5 +147,29 @@ func (s *UpdateTaskService) Update(uid uint) serializer.Response {
 		StatusCode: errcode.OK,
 		Data:       serializer.BuildTask(task),
 		Msg:        "Update task successed.",
+	}
+}
+
+func (s *DeleteTaskService) Delete(uid uint) serializer.Response {
+	status_code := 0
+	var task model.Task
+	model.DB.Model(&model.Task{}).Where("user_id = ? and title = ?", uid, s.Title).First(&task)
+	if task.Title == "" {
+		status_code = errcode.No_title_found
+		return serializer.Response{
+			StatusCode: status_code,
+			Error:      "No title found.",
+		}
+	}
+	if err := dao.DeleteTask(&task); err != nil {
+		status_code = errcode.Delete_task_error
+		return serializer.Response{
+			StatusCode: status_code,
+			Error:      "Delete task error.",
+		}
+	}
+	return serializer.Response{
+		StatusCode: errcode.OK,
+		Msg:        "Delete task successed.",
 	}
 }

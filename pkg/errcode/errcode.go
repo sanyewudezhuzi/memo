@@ -34,6 +34,7 @@ const (
 	// system-0
 	Create_task_error = 2001
 	Update_task_error = 2002
+	Delete_task_error = 2003
 
 	// user-1
 	Failed_to_verify_identity = 2101

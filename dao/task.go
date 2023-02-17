@@ -9,3 +9,7 @@ func CreateTask(task *model.Task) error {
 func UpdateTask(task *model.Task) error {
 	return model.DB.Save(task).Error
 }
+
+func DeleteTask(task *model.Task) error {
+	return model.DB.Delete(task).Error
+}
