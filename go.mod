@@ -1,5 +1,7 @@
 module github.com/sanyewudezhuzi/memo
 
+//  go mod file
+
 go 1.20
 
 require (
