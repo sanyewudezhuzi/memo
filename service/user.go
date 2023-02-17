@@ -1,5 +1,7 @@
 package service
 
+// user 服务层
+
 import (
 	"github.com/sanyewudezhuzi/memo/dao"
 	"github.com/sanyewudezhuzi/memo/model"
