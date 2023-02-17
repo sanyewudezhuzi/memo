@@ -1,5 +1,7 @@
 package serializer
 
+// 序列化 task 模块
+
 import "github.com/sanyewudezhuzi/memo/model"
 
 type Task struct {

@@ -1,5 +1,7 @@
 package serializer
 
+// 序列化 user 模块
+
 import "github.com/sanyewudezhuzi/memo/model"
 
 type User struct {

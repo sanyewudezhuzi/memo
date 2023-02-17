@@ -1,5 +1,7 @@
 package serializer
 
+// 通用序列化
+
 // 基础序列化器
 type Response struct {
 	StatusCode int         `json:"status_code"`
